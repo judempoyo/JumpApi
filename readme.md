@@ -61,24 +61,24 @@ This API provides endpoints for managing users and products, as well as the abil
 ## Base URL
 
   ```url
-    http://your-api-domain/api/your-script.php
+    http://JumpAi/api/index.php
   ```
 
 ### Endpoints
 
 - ## User Model
 
-  - `GET /api/your-script.php?model=user` - Get all users
-  - `POST /api/your-script.php?model=user` - Create a new user
-  - `PUT /api/your-script.php?model=user&id={id}`- Update a user
-  - `DELETE /api/your-script.php?model=user&id={id}` - Delete a user
+  - `GET /JumpAi/api/index.phpmodel=user` - Get all users
+  - `POST /JumpAi/api/index.phpmodel=user` - Create a new user
+  - `PUT /JumpAi/api/index.phpmodel=user&id={id}`- Update a user
+  - `DELETE /JumpAi/api/index.phpmodel=user&id={id}` - Delete a user
   
 - ## Product Model
 
-  - `GET /api/your-script.php?model=product` - Get all products
-  - `POST /api/your-script.php?model=product` - Create a new product
-  - `PUT /api/your-script.php?model=product&id={id}` - Update a product
-  - `DELETE /api/your-script.php?model=product&id={id}` - Delete a product
+  - `GET /JumpAi/api/index.php?model=product` - Get all products
+  - `POST /JumpAi/api/index.php?model=product` - Create a new product
+  - `PUT /JumpAi/api/index.php?model=product&id={id}` - Update a product
+  - `DELETE /JumpAi/api/index.php?model=product&id={id}` - Delete a product
 
 - ## Dynamic Model Creation
 
