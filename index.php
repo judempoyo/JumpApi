@@ -7,7 +7,6 @@ require_once './config/DataBase.php';
 require_once './models/BaseModel.php';
 require_once './models/Product.php';
 require_once './models/User.php';
-
 require_once './models/ModelFactory.php';
 
 header("Access-Control-Allow-Origin: *");
@@ -45,19 +44,50 @@ try {
 
 function handleGetRequest($model)
 {
-  $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-  $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-  $data = $model->getAll($page, $limit);
-  jsonResponse($data);
+  // Check if an ID is provided in the query parameters
+  $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
+
+  if ($id) {
+    // Fetch a single product by ID
+    $product = $model->getById($id); // Assuming you have a method getById in your model
+
+    if ($product) {
+      jsonResponse([
+        'status' => 'success',
+        'data' => $product
+      ]);
+    } else {
+      jsonResponse([
+        'status' => 'error',
+        'data' => ['message' => 'Product not found']
+      ], 404);
+    }
+  } else {
+    // If no ID is provided, fetch all products
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+    $data = $model->getAll($page, $limit);
+
+    jsonResponse([
+      'status' => 'success',
+      'data' => $data
+    ]);
+  }
 }
 
 function handlePostRequest($model)
 {
   $data = json_decode(file_get_contents("php://input"));
   if ($model->create($data)) {
-    jsonResponse(['message' => 'Resource created successfully'], 201);
+    jsonResponse([
+      'status' => 'success',
+      'data' => ['message' => 'Resource created successfully']
+    ], 201);
   } else {
-    jsonResponse(['error' => 'Failed to create resource'], 400);
+    jsonResponse([
+      'status' => 'error',
+      'data' => ['error' => 'Failed to create resource']
+    ], 400);
   }
 }
 
@@ -66,19 +96,43 @@ function handlePutRequest($model)
   $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
   $data = json_decode(file_get_contents("php://input"));
   if ($model->update($id, $data)) {
-    jsonResponse(['message' => 'Resource updated successfully']);
+    jsonResponse([
+      'status' => 'success',
+      'data' => ['message' => 'Resource updated successfully']
+    ]);
   } else {
-    jsonResponse(['error' => 'Failed to update resource'], 400);
+    jsonResponse([
+      'status' => 'error',
+      'data' => ['error' => 'Failed to update resource']
+    ], 400);
   }
 }
 
 function handleDeleteRequest($model)
 {
   $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-  if ($model->delete($id)) {
-    jsonResponse(['message' => 'Resource deleted successfully']);
+
+  // Check if the product exists before attempting to delete
+  $product = $model->getById($id); // Assuming you have a method getById in your model
+
+  if (!$product) {
+    jsonResponse([
+      'status' => 'error',
+      'data' => ['message' => 'Product not found']
+    ], 404); // Return 404 status code
   } else {
-    jsonResponse(['error' => 'Failed to delete resource'], 400);
+    // Proceed to delete the product
+    if ($model->delete($id)) {
+      jsonResponse([
+        'status' => 'success',
+        'data' => ['message' => 'Resource deleted successfully']
+      ]);
+    } else {
+      jsonResponse([
+        'status' => 'error',
+        'data' => ['message' => 'Failed to delete resource']
+      ], 400);
+    }
   }
 }
 
