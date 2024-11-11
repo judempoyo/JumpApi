@@ -1,0 +1,14 @@
+RewriteEngine On
+
+# Redirect requests for the root API endpoint
+RewriteRule ^api/?$ index.php [NC,L]
+
+# Redirect requests for specific models (like products)
+RewriteRule ^api/([^/]+)/?$ index.php?model=$1 [NC,L]
+
+# Redirect requests for specific model instances (like products with ID)
+RewriteRule ^api/([^/]+)/([0-9]+)/?$ index.php?model=$1&id=$2 [NC,L]
+
+# Optional: Redirect requests for specific actions (GET, POST, PUT, DELETE)
+RewriteCond %{REQUEST_METHOD} ^(GET|POST|PUT|DELETE)$
+RewriteRule ^api/([^/]+)/?$ index.php?model=$1 [NC,L]
