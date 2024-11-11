@@ -111,13 +111,13 @@ This API provides endpoints for managing users and products, as well as the abil
 ## Get All Users
 
   ```bash
-    curl -X GET "<http://your-api-domain/api/your-script.php?model=user&page=1&limit=10>"
+    curl -X GET "<http://JumpAi/api/index.php?model=user&page=1&limit=10>"
   ```
 
 ## Create a User
 
   ```bash
-    curl -X POST "<http://your-api-domain/api/your-script.php?model=user>" \
+    curl -X POST "<http://JumpAi/api/index.php?model=user>" \
     -H "Content-Type: application/json" \
     -d '{"username": "newuser", "password": "password123"}'
   ```
@@ -125,7 +125,7 @@ This API provides endpoints for managing users and products, as well as the abil
 ## Create a Dynamic Model
 
   ```bash
-    curl -X POST "<http://your-api-domain/api/your-script.php?model=customModel>" \
+    curl -X POST "<http://JumpAi/api/index.php?model=customModel>" \
     -H "Content-Type: application/json" \
     -d '{"field1": "value1", "field2": "value2"}'
   ```
