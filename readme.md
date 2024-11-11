@@ -32,8 +32,8 @@ This API provides endpoints for managing users and products, as well as the abil
 1. **Clone the Repository**:
 
    ```bash
-   git clone https://github.com/yourusername/your-repo.git
-   cd your-repo 
+   git clone https://github.com/judempoyo/JumpApi.git
+   cd JumpApi
     ```
 
 2. **Set Up the Database**:
