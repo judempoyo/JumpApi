@@ -1,5 +1,6 @@
 <?php
-include_once 'BaseModel.php';
+
+namespace models;
 
 class User extends BaseModel
 {
@@ -8,17 +9,17 @@ class User extends BaseModel
     $offset = ($page - 1) * $limit;
     $query = "SELECT * FROM users LIMIT :limit OFFSET :offset";
     $stmt = $this->connection->prepare($query);
-    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+    $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);
+    $stmt->bindParam(':offset', $offset, \PDO::PARAM_INT);
     $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
   }
 
   public function getById($id)
   {
     $query = "SELECT * FROM users WHERE id = ?";
     $stmt = $this->executeQuery($query, [$id]);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+    return $stmt->fetch(\PDO::FETCH_ASSOC);
   }
 
   public function create($data)

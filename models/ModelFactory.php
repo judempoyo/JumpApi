@@ -1,4 +1,7 @@
 <?php
+
+namespace models;
+
 class ModelFactory
 {
   public static function create($modelName, $db)
@@ -10,7 +13,7 @@ class ModelFactory
         return new User($db);
         // Add more models as needed
       default:
-        throw new Exception("Model not found.");
+        throw new \Exception("Model not found.");
     }
   }
 }

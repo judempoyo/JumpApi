@@ -3,11 +3,19 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+
 require_once './config/DataBase.php';
 require_once './models/BaseModel.php';
 require_once './models/Product.php';
 require_once './models/User.php';
 require_once './models/ModelFactory.php';
+
+
+use models\Product;
+use models\User;
+use models\ModelFactory;
+use config\DataBase;
+use models\BaseModel;
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
@@ -95,16 +103,27 @@ function handlePutRequest($model)
 {
   $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
   $data = json_decode(file_get_contents("php://input"));
-  if ($model->update($id, $data)) {
-    jsonResponse([
-      'status' => 'success',
-      'data' => ['message' => 'Resource updated successfully']
-    ]);
-  } else {
+
+  $product = $model->getById($id);
+  if (!$product) {
     jsonResponse([
       'status' => 'error',
-      'data' => ['error' => 'Failed to update resource']
-    ], 400);
+      'data' => ['message' => 'Product not found']
+    ], 404); // Return 404 status code
+  } else {
+
+    // Proceed to update the product
+    if ($model->update($id, $data)) {
+      jsonResponse([
+        'status' => 'success',
+        'data' => ['message' => 'Resource updated successfully']
+      ]);
+    } else {
+      jsonResponse([
+        'status' => 'error',
+        'data' => ['error' => 'Failed to update resource']
+      ], 400);
+    }
   }
 }
 

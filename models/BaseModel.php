@@ -1,4 +1,7 @@
 <?php
+
+namespace models;
+
 abstract class BaseModel
 {
   protected $connection;

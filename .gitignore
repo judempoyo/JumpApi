@@ -1,0 +1,19 @@
+# Composer dependencies
+/vendor/
+
+# Composer lock file (if you want to ignore it, but generally it's good to keep it)
+# composer.lock
+
+
+# PHPUnit specific files
+/phpunit.xml
+/phpunit.xml.dist
+
+# Logs
+/logs/
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
