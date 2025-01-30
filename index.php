@@ -53,11 +53,11 @@ try {
 function handleGetRequest($model)
 {
   // Check if an ID is provided in the query parameters
-  $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
+  $id = isset($_GET['id']) ? (int) $_GET['id'] : null;
 
   if ($id) {
     // Fetch a single product by ID
-    $product = $model->getById($id); // Assuming you have a method getById in your model
+    $product = $model->getById($id);
 
     if ($product) {
       jsonResponse([
@@ -72,8 +72,8 @@ function handleGetRequest($model)
     }
   } else {
     // If no ID is provided, fetch all products
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+    $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+    $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 10;
     $data = $model->getAll($page, $limit);
 
     jsonResponse([
@@ -101,7 +101,7 @@ function handlePostRequest($model)
 
 function handlePutRequest($model)
 {
-  $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+  $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
   $data = json_decode(file_get_contents("php://input"));
 
   $product = $model->getById($id);
@@ -112,7 +112,7 @@ function handlePutRequest($model)
     ], 404); // Return 404 status code
   } else {
 
-    // Proceed to update the product
+    // Proceed to update
     if ($model->update($id, $data)) {
       jsonResponse([
         'status' => 'success',
@@ -129,10 +129,10 @@ function handlePutRequest($model)
 
 function handleDeleteRequest($model)
 {
-  $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+  $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
   // Check if the product exists before attempting to delete
-  $product = $model->getById($id); // Assuming you have a method getById in your model
+  $product = $model->getById($id);
 
   if (!$product) {
     jsonResponse([
@@ -140,7 +140,7 @@ function handleDeleteRequest($model)
       'data' => ['message' => 'Product not found']
     ], 404); // Return 404 status code
   } else {
-    // Proceed to delete the product
+    // Proceed to delete
     if ($model->delete($id)) {
       jsonResponse([
         'status' => 'success',
