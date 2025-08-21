@@ -1,22 +1,28 @@
 <?php
-define('API_VERSION', 'v1');
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
+define('API_VERSION', $_ENV['API_VERSION'] ?? 'v1');
 define('API_BASE_PATH', '/api/' . API_VERSION);
 
-define('ENVIRONMENT', getenv('ENVIRONMENT') ?: 'development');
+define('ENVIRONMENT', $_ENV['ENVIRONMENT'] ?? 'development');
 
-define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
-define('DB_NAME', getenv('DB_NAME') ?: 'jump_api');
-define('DB_USER', getenv('DB_USER') ?: 'root');
-define('DB_PASS', getenv('DB_PASS') ?: 'Jude@2023');
-define('DB_PORT', getenv('DB_PORT') ?: 3306);
-define('DB_CHARSET', 'utf8mb4');
+define('DB_HOST', $_ENV['DB_HOST'] ?? 'localhost');
+define('DB_NAME', $_ENV['DB_NAME'] ?? 'jump_api');
+define('DB_USER', $_ENV['DB_USER'] ?? 'root');
+define('DB_PASS', $_ENV['DB_PASS'] ?? '');
+define('DB_PORT', $_ENV['DB_PORT'] ?? 3306);
+define('DB_CHARSET', $_ENV['DB_CHARSET'] ?? 'utf8mb4');
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization, Accept, charset, boundary, Content-Length');
 header('Access-Control-Allow-Credentials: true');
 
-date_default_timezone_set('Europe/Paris');
+$timezone = $_ENV['TIMEZONE'] ?? 'Europe/Paris';
+date_default_timezone_set($timezone);
 
 if (ENVIRONMENT === 'development') {
     error_reporting(E_ALL);

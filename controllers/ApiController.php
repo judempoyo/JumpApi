@@ -6,7 +6,6 @@ class ApiController
   protected $requestMethod;
   protected $uri;
   protected $params = [];
-  protected $external_config = null;
 
   public function __construct($db, $model = null)
   {
